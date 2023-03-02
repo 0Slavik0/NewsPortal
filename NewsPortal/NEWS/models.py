@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from NewsPortal.NEWS.resourser import CATEGORIES
+from NewsPortal.NEWS.resourser import POST_TYPES
 
 
 class Author(models.Model):
@@ -13,36 +15,10 @@ class Author(models.Model):
         return author_articles_rating * 3 + author_comments_rating + comments_to_author_articles_rating
 
 class Category(models.Model):
-    culture = 'CU'
-    science = 'SC'
-    tech = 'TE'
-    politics = 'PO'
-    sport = 'SP'
-    entertainment = 'EN'
-    economics = 'EC'
-    education = 'ED'
-
-    CATEGORIES = [
-        (culture, 'Культура'),
-        (science, 'Наука'),
-        (politics, 'Политика'),
-        (sport, 'Спорт'),
-        (economics, 'Экономика'),
-        (education, 'Развлечения'),
-        (tech, 'Технологии'),
-        (entertainment, 'Образование')
-    ]
 
     name = models.CharField(max_length = 2, unique = True, choices = CATEGORIES)
 
 class Post(models.Model):
-    article = 'AR'
-    news = 'NE'
-
-    POST_TYPES = [
-        (article, 'Статья'),
-        (news, 'Новость')
-    ]
 
     author = models.ForeignKey(Author, on_delete = models.CASCADE)
     post_type = models.CharField(max_length = 2, choices = POST_TYPES)
