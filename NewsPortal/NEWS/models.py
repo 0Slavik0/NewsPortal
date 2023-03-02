@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 class Author(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)
-    rating_author = models.FloatField(default = 0.0)
+    rating_author = models.IntegerField(default = 0)
 
     def update_rating(self):
         author_articles_rating = self.post_set.all().aggregate(post_rating = Sum('post_rating'))
@@ -44,10 +44,10 @@ class Post(models.Model):
         (news, 'Новость')
     ]
 
-    author = models.OneToOneField(Author, on_delete = models.CASCADE)
+    author = models.ForeignKey(Author, on_delete = models.CASCADE)
     post_type = models.CharField(max_length = 2, choices = POST_TYPES)
     date = models.DateTimeField(auto_now_add = True)
-    category = models.ManyToManyField(Category, through = 'PostCategory')
+    post_category = models.ManyToManyField(Category, through = 'PostCategory')
     header = models.CharField(max_length = 124)
     text = models.TextField()
     post_rating = models.IntegerField(default = 0)
