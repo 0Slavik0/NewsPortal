@@ -1,0 +1,41 @@
+1. venv\scripts\activate
+2.  cd .\NewsPortal\
+2.1 python manage.py makemigrations
+2.2 python manage.py migrate
+3. python .\manage.py shell
+4. >>> from NEWS.models import User
+5. >>> user_1 = User.objects.create_user('Иванов Иван Иванович')
+6. >>> user_2 = User.objects.create_user('Петров Петр Педрович')
+7. >>> from NEWS.models import Author
+8. >>> Author.objects.create(user=user_1)
+9. >>> Author.objects.create(user=user_2)
+10. >>> from NEWS.models import Post
+11. >>> Post.objects.create(text = 'Спасатели в Санкт-Петербурге помогли ста рыбакам, которые оказались на льду в акватории Финского залива, сообщило городское ГУ МЧС. В субботу в Петербурге дул сильный порывистый ветер, который создава
+л угрозу подъема уровня воды и разрушения льда на водоемах. Спасатели осматривали акваторию и берега залива, предупреждая жителей о смертельной опасности нахождения на льду.', author = Author.objects.get(pk=1), header = 'Спасатели в
+ Петербурге доставили на берег рыбаков, оказавшихся на льду', post_type = 'NE')
+12. >>> Post.objects.create(text = 'Правительство России одобрило выделение в 2023-2024 годах средств бюджету Кемеровской области для строительства объектов, инфраструктуры в рамках реализации мероприятия "Комплексное развитие спортивно
+-туристического комплекса "Шерегеш", сообщается на сайте кабмина.', author = Author.objects.get(pk=2), header = 'Правительство одобрило субсидии на реконструкцию комплекса "Шерегеш"', post_type = 'AR')
+13. >>> from NEWS.models import Category
+13.1 >>> Category.objects.create(name = 'CU')
+13.2 >>> Category.objects.create(name = 'SC')
+13.3 >>> Category.objects.create(name = 'TE')
+13.4 >>> Category.objects.create(name = 'PO')
+13.5 >>> Category.objects.create(name = 'SP')
+13.6 >>> Category.objects.create(name = 'EN')
+13.7 >>> Category.objects.create(name = 'EC')
+13.8 >>> Category.objects.create(name = 'ED')
+14. >>> from NEWS.models import PostCategory
+14.1 >>> PostCategory.objects.create(post = Post.objects.get(pk=1), category = Category.objects.get(pk=1))
+14.2 >>> PostCategory.objects.create(post = Post.objects.get(pk=1), category = Category.objects.get(pk=8))
+14.3 >>> PostCategory.objects.create(post = Post.objects.get(pk=2), category = Category.objects.get(pk=7))
+14.4 >>> PostCategory.objects.create(post = Post.objects.get(pk=2), category = Category.objects.get(pk=5))
+15. >>> from NEWS.models import Comment
+15.1 >>> Comment.objects.create(post = Post.objects.get(pk=1), user = user_1, text = 'Отличная новость')
+15.2 >>> Comment.objects.create(post = Post.objects.get(pk=1), user = user_2, text = 'Молодцы')
+15.3 >>> Comment.objects.create(post = Post.objects.get(pk=2), user = user_1, text = 'Это хорошо')
+15.4 >>> Comment.objects.create(post = Post.objects.get(pk=2), user = user_2, text = 'Правильное вложение')
+16. >>> Post.objects.create(text = 'Запуск космического корабля «Союз МС-23» запланирован на 24 февраля вынужденно, выяснили «Известия». Он должен заменить разгерметизировавшийся в конце прошлого года «МС-22». Откладывать запуск нельзя: аппарат уже заправлен топливом с агрессивными компонентами, которое может повредить части корабля. По поводу же утечки с «Прогресса МС-21», который был сведен с орбиты и затоплен в Тихом океане утром 19 февраля, сейчас рассматриваются прямо противоположные версии: одни специалисты подтверждают гипотезу с метеороидом, другие уверены, что космическое тело не могло привести к аварии.', author = Author.objects.get(pk=1), header = 'Взвесить все пуски: почему нельзя откладывать старт «Союза МС-23»', post_type = 'AR')
+17. >>> 
+18. >>>
+
+
